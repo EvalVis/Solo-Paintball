@@ -20,6 +20,15 @@ canvas {
 </style>
 </head>
 <body>
+<script>
+let BALL_SPEED = 5;
+
+fetch("/api/env")
+  .then(r => r.json())
+  .then(cfg => {
+      BALL_SPEED = Number(cfg.BALL_SPEED);
+  });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 <script>
 const { Engine, Render, World, Bodies, Body, Vector, Events } = Matter;
@@ -137,7 +146,7 @@ setInterval(() => {
     const playerPos = player.position;
     let dir = Vector.sub(mousePos, playerPos);
     dir = Vector.normalise(dir);
-    const speed = 5;
+    const speed = BALL_SPEED;
 
     const spawnDistance = tileSize;
     const spawnPos = {
