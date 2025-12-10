@@ -22,11 +22,13 @@ canvas {
 <body>
 <script>
 let BALL_SPEED = 5;
+let SHOOT_DELAY = 5000;
 
 fetch("/api/env")
   .then(r => r.json())
-  .then(cfg => {
-      BALL_SPEED = Number(cfg.BALL_SPEED);
+  .then(response => {
+      BALL_SPEED = Number(response.BALL_SPEED);
+	  SHOOT_DELAY = Number(response.SHOOT_DELAY);
   });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
@@ -163,7 +165,7 @@ setInterval(() => {
     Body.setVelocity(ball, { x: dir.x * speed, y: dir.y * speed }); // initial velocity
     balls.push(ball);
     World.add(engine.world, ball);
-}, 5000);
+}, SHOOT_DELAY);
 
 // Listen for collisions
 Events.on(engine, 'collisionStart', (event) => {
